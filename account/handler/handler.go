@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -21,7 +22,7 @@ func NewHandler(c *Config) {
 
 	h := &Handler{}
 
-	g := c.R.Group("/api/account")
+	g := c.R.Group(os.Getenv("ACCOUNT_API_URL"))
 
 	g.GET("/me", h.Me)
 	g.POST("/signup", h.Signup)
