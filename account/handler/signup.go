@@ -1,8 +1,10 @@
 package handler
 
 import (
-	"net/http"
+	"log"
 
+	"github.com/binishmaharjan/memrizr/account/model"
+	"github.com/binishmaharjan/memrizr/account/model/apperrors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,7 +17,27 @@ type signupReq struct {
 
 // Signup Handler
 func (h *Handler) Signup(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"hello": "it's signup",
-	})
+	// define a variable to which we'll bind incoming
+	// json body, {email, password}
+	var req signupReq
+
+	// Bind incoming json to struct and check for validation errors
+	if ok := bindData(c, &req); !ok {
+		return
+	}
+
+	u := &model.User{
+		Email:    req.Email,
+		Password: req.Password,
+	}
+
+	err := h.UserService.Signup(c, u)
+
+	if err != nil {
+		log.Printf("Failed to sign up user: v\n", err.Error())
+		c.JSON(apperrors.Status(err), gin.H{
+			"error": err,
+		})
+		return
+	}
 }
