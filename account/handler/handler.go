@@ -2,7 +2,6 @@ package handler
 
 import (
 	"net/http"
-	"os"
 
 	"github.com/binishmaharjan/memrizr/account/model"
 	"github.com/gin-gonic/gin"
@@ -20,6 +19,7 @@ type Config struct {
 	R            *gin.Engine
 	UserService  model.UserService
 	TokenService model.TokenService
+	BaseURL      string
 }
 
 // NewHandleer initializes the handler with required injected services along with http routes
@@ -32,7 +32,7 @@ func NewHandler(c *Config) {
 		TokenService: c.TokenService,
 	}
 
-	g := c.R.Group(os.Getenv("ACCOUNT_API_URL"))
+	g := c.R.Group(c.BaseURL)
 
 	g.GET("/me", h.Me)
 	g.POST("/signup", h.Signup)
@@ -42,7 +42,6 @@ func NewHandler(c *Config) {
 	g.POST("/image", h.Image)
 	g.DELETE("/image", h.DeleteImage)
 	g.PUT("/details", h.Details)
-	g.GET("/home", h.Home)
 }
 
 // // Signin handler
@@ -84,11 +83,5 @@ func (h *Handler) DeleteImage(c *gin.Context) {
 func (h *Handler) Details(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"hello": "it's details",
-	})
-}
-
-func (h *Handler) Home(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"hello": "it's' home page",
 	})
 }
