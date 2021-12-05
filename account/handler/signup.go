@@ -13,7 +13,7 @@ import (
 // it is used for validation and json marshalling
 type signupReq struct {
 	Email    string `json:"email" binding:"required,email"`
-	Password string `json:"password "binding:"required,gte=6,lte=30"`
+	Password string `json:"password" binding:"required,gte=6,lte=30"`
 }
 
 // Signup Handler
@@ -35,7 +35,7 @@ func (h *Handler) Signup(c *gin.Context) {
 	err := h.UserService.Signup(c, u)
 
 	if err != nil {
-		log.Printf("Failed to sign up user: v\n", err.Error())
+		log.Printf("Failed to sign up user: %v\n", err.Error())
 		c.JSON(apperrors.Status(err), gin.H{
 			"error": err,
 		})
