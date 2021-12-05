@@ -42,6 +42,7 @@ func NewHandler(c *Config) {
 	g.POST("/image", h.Image)
 	g.DELETE("/image", h.DeleteImage)
 	g.PUT("/details", h.Details)
+	g.GET("/home", h.Home)
 }
 
 // // Signin handler
@@ -83,5 +84,11 @@ func (h *Handler) DeleteImage(c *gin.Context) {
 func (h *Handler) Details(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"hello": "it's details",
+	})
+}
+
+func (h *Handler) Home(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"hello": "it's' home page",
 	})
 }

@@ -8,19 +8,22 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
-
-	"github.com/binishmaharjan/memrizr/account/handler"
-	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	log.Println("Starting Server...")
 
-	router := gin.Default()
+	// initialize dataSources
+	ds, err := initDS()
+	if err != nil {
+		log.Fatalf("Unable to initialize database %v\n", err)
+	}
 
-	handler.NewHandler(&handler.Config{
-		R: router,
-	})
+	router, err := inject(ds)
+
+	if err != nil {
+		log.Fatalf("Unable to inject datasources %v\n", err)
+	}
 
 	srv := &http.Server{
 		Addr:    ":8080",
@@ -48,6 +51,10 @@ func main() {
 	// the request it is currently handling
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
+
+	if err := ds.close(); err != nil {
+		log.Fatalf("a problem occurred while closing database: %v\n", err)
+	}
 
 	//Shutdown server
 	log.Println("Shutting down server...")
