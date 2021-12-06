@@ -72,5 +72,9 @@ func (d *dataSources) close() error {
 		return fmt.Errorf("error closing Postgresql: %w", err)
 	}
 
+	if err := d.RedisClient.Close(); err != nil {
+		return fmt.Errorf("error closing Redis Client: %w", err)
+	}
+
 	return nil
 }
