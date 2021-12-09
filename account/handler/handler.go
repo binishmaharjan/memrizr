@@ -2,8 +2,11 @@ package handler
 
 import (
 	"net/http"
+	"time"
 
+	"github.com/binishmaharjan/memrizr/account/handler/middleware"
 	"github.com/binishmaharjan/memrizr/account/model"
+	"github.com/binishmaharjan/memrizr/account/model/apperrors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,10 +19,11 @@ type Handler struct {
 // Config will hold services that will eventuall be injected into this
 //hanlder layer on handler initialization
 type Config struct {
-	R            *gin.Engine
-	UserService  model.UserService
-	TokenService model.TokenService
-	BaseURL      string
+	R               *gin.Engine
+	UserService     model.UserService
+	TokenService    model.TokenService
+	BaseURL         string
+	TimeoutDuration time.Duration
 }
 
 // NewHandleer initializes the handler with required injected services along with http routes
@@ -33,6 +37,10 @@ func NewHandler(c *Config) {
 	}
 
 	g := c.R.Group(c.BaseURL)
+
+	if gin.Mode() != gin.TestMode {
+		g.Use(middleware.Timeout(c.TimeoutDuration, apperrors.NewServiceUnavailable()))
+	}
 
 	g.GET("/me", h.Me)
 	g.POST("/signup", h.Signup)
