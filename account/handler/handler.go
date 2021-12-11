@@ -52,13 +52,6 @@ func NewHandler(c *Config) {
 	g.PUT("/details", h.Details)
 }
 
-// // Signin handler
-func (h *Handler) Signin(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"hello": "it's signin",
-	})
-}
-
 // // Signout handler
 func (h *Handler) Signout(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{

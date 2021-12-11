@@ -63,3 +63,11 @@ func (s *userService) Signup(ctx context.Context, u *model.User) error {
 
 	return nil
 }
+
+// Sigin in reaches to our repository to check if the user exists
+// and then compares supplied password with provided password
+// if a valid email/password combo is provided the you will hold
+// all availabe user fields.
+func (s *userService) Signin(ctx context.Context, user *model.User) error {
+	panic("not implemented yet")
+}
