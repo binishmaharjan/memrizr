@@ -17,7 +17,7 @@ type Handler struct {
 }
 
 // Config will hold services that will eventuall be injected into this
-//hanlder layer on handler initialization
+// handler layer on handler initialization
 type Config struct {
 	R               *gin.Engine
 	UserService     model.UserService
@@ -40,9 +40,12 @@ func NewHandler(c *Config) {
 
 	if gin.Mode() != gin.TestMode {
 		g.Use(middleware.Timeout(c.TimeoutDuration, apperrors.NewServiceUnavailable()))
+		g.GET("/me", middleware.AuthUser(h.TokenService), h.Me)
+
+	} else {
+		g.GET("/me", h.Me)
 	}
 
-	g.GET("/me", h.Me)
 	g.POST("/signup", h.Signup)
 	g.POST("/signin", h.Signin)
 	g.POST("/signout", h.Signout)

@@ -12,7 +12,7 @@ type MockTokenRepository struct {
 	mock.Mock
 }
 
-// SetRefreshToken is a mock of model.TokenRepository SetRefreshToken
+// SetRefreshToken is mock of model.TokenRepository SetRefreshToken
 func (m *MockTokenRepository) SetRefreshToken(ctx context.Context, userID string, tokenID string, expiresIn time.Duration) error {
 	ret := m.Called(ctx, userID, tokenID, expiresIn)
 

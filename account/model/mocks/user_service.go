@@ -16,7 +16,7 @@ type MockUserService struct {
 // Get is mock of UserService Get
 func (m *MockUserService) Get(ctx context.Context, uid uuid.UUID) (*model.User, error) {
 	// args that will be passed to "Return" in the tests, when function
-	// is called with a uid. Hence the name "ret"
+	// is called with uid hence the name "ret"
 	ret := m.Called(ctx, uid)
 
 	// first value passed to "Return"

@@ -44,7 +44,7 @@ func main() {
 
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 
-	// This blicks until a signal is passed into the quit channel
+	// This blocks until a signal is passed into the quit channel
 	<-quit
 
 	// The context is used to inform the server it has 5 seconds to finish
@@ -56,7 +56,7 @@ func main() {
 		log.Fatalf("a problem occurred while closing database: %v\n", err)
 	}
 
-	//Shutdown server
+	// Shutdown server
 	log.Println("Shutting down server...")
 	if err := srv.Shutdown(ctx); err != nil {
 		log.Fatalf("Server forced to shutdown: %v\n", err)

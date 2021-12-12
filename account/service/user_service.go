@@ -73,7 +73,7 @@ func (s *userService) Signin(ctx context.Context, user *model.User) error {
 
 	// Will return NotAuthorized to client to omit details of why
 	if err != nil {
-		return apperrors.NewAuthorization("Invalid email and passwords combination")
+		return apperrors.NewAuthorization("Email does not exits")
 	}
 
 	// verify password
@@ -87,6 +87,6 @@ func (s *userService) Signin(ctx context.Context, user *model.User) error {
 		return apperrors.NewAuthorization("Invalid email and passwords combination")
 	}
 
-	user = uFetched
+	*user = *uFetched
 	return nil
 }
