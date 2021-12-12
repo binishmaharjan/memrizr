@@ -16,7 +16,7 @@ type Handler struct {
 	TokenService model.TokenService
 }
 
-// Config will hold services that will eventuall be injected into this
+// Config will hold services that will eventually be injected into this
 // handler layer on handler initialization
 type Config struct {
 	R               *gin.Engine
@@ -26,7 +26,7 @@ type Config struct {
 	TimeoutDuration time.Duration
 }
 
-// NewHandleer initializes the handler with required injected services along with http routes
+// NewHandler initializes the handler with required inject services along with http routes
 // Does not return as it deals directly with a reference to the gin Engine
 func NewHandler(c *Config) {
 
@@ -55,14 +55,14 @@ func NewHandler(c *Config) {
 	g.PUT("/details", h.Details)
 }
 
-// // Signout handler
+// Sign out handler
 func (h *Handler) Signout(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"hello": "it's signout",
 	})
 }
 
-// // Tokens handler
+// Tokens handler
 func (h *Handler) Tokens(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"hello": "it's tokens",

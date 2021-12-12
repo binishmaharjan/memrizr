@@ -15,7 +15,7 @@ type userService struct {
 	UserRepository model.UserRepository
 }
 
-// USConfig will hold repositories that will eventually be injected into this
+// USConfig will hold repositories that will eventually be injected into
 // this service layer
 type USConfig struct {
 	UserRepository model.UserRepository
@@ -36,7 +36,7 @@ func (s *userService) Get(ctx context.Context, uid uuid.UUID) (*model.User, erro
 	return u, err
 }
 
-// Signup reaches our to a UserRepository to verify the
+// Signup reaches our a UserRepository to verify the
 // email address is available and signs up the user if this is the case
 func (s *userService) Signup(ctx context.Context, u *model.User) error {
 	pw, err := hashPassword(u.Password)
@@ -66,7 +66,7 @@ func (s *userService) Signup(ctx context.Context, u *model.User) error {
 
 // Sign in in reaches to our repository to check if the user exists
 // and then compares supplied password with provided password
-// if a valid email/password combo is provided the you will hold
+// if a valid email/ password combo is provided the you will hold
 // all availabe user fields.
 func (s *userService) Signin(ctx context.Context, user *model.User) error {
 	uFetched, err := s.UserRepository.FindByEmail(ctx, user.Email)

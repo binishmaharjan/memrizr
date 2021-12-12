@@ -27,7 +27,7 @@ func TestMe(t *testing.T) {
 		mockUserResp := &model.User{
 			UID:   uid,
 			Email: "bob@bob.com",
-			Name:  "Bobby Bostson",
+			Name:  "Bobby Boston",
 		}
 
 		mockUserService := new(mocks.MockUserService)
