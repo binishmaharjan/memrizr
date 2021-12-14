@@ -55,17 +55,10 @@ func NewHandler(c *Config) {
 	g.PUT("/details", h.Details)
 }
 
-// Sign out handler
+// Signout handler
 func (h *Handler) Signout(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"hello": "it's signout",
-	})
-}
-
-// Tokens handler
-func (h *Handler) Tokens(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"hello": "it's tokens",
 	})
 }
 

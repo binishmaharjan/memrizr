@@ -121,3 +121,28 @@ func validateIDToken(tokenString string, key *rsa.PublicKey) (*idTokenCustomClai
 
 	return claims, nil
 }
+
+// validateRefreshToken uses the secret key to validate a refresh token
+func validateRefreshToken(tokenString string, key string) (*refreshTokenCustomClaims, error) {
+	claims := &refreshTokenCustomClaims{}
+	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+		return []byte(key), nil
+	})
+
+	// For now, we will just return the error and handle logging in service level
+	if err != nil {
+		return nil, err
+	}
+
+	if !token.Valid {
+		return nil, fmt.Errorf("refresh token is invalid")
+	}
+
+	claims, ok := token.Claims.(*refreshTokenCustomClaims)
+
+	if !ok {
+		return nil, fmt.Errorf("refresh token valid but could not parse claims")
+	}
+
+	return claims, nil
+}
