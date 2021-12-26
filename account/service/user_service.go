@@ -90,3 +90,15 @@ func (s *userService) Signin(ctx context.Context, user *model.User) error {
 	*user = *uFetched
 	return nil
 }
+
+func (s *userService) UpdateDetails(ctx context.Context, user *model.User) error {
+	// Update user in UserRepository
+	err := s.UserRepository.Update(ctx, user)
+
+	if err != nil {
+		log.Printf("Unable to prepare user update query: %v \n", err)
+		return err
+	}
+
+	return nil
+}
