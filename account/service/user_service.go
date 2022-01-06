@@ -164,3 +164,36 @@ func objNameFromURL(imageURL string) (string, error) {
 	// get "path" of url
 	return path.Base(urlPath.Path), nil
 }
+
+func (s *userService) ClearProfileImage(
+	ctx context.Context,
+	uid uuid.UUID,
+) error {
+	user, err := s.UserRepository.FindByID(ctx, uid)
+
+	if err != nil {
+		return err
+	}
+
+	if user.ImageURL == "" {
+		return nil
+	}
+
+	objName, err := objNameFromURL(user.ImageURL)
+	if err != nil {
+		return err
+	}
+
+	err = s.ImageRepository.DeleteProfile(ctx, objName)
+	if err != nil {
+		return err
+	}
+
+	_, err = s.UserRepository.UpdateImage(ctx, uid, "")
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

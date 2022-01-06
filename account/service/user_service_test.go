@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"fmt"
+	"github.com/binishmaharjan/memrizr/account/model/fixture"
 	"testing"
 
 	"github.com/binishmaharjan/memrizr/account/model"
